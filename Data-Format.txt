@@ -1,0 +1,31 @@
+This solution does not accepts input data files for automated/batch optimization tasks. Plan configurations are defined programatically, and custom data import mechanism can be build on top the provided code. Optimized solutions are provided at run time and are not persisted to a data medium.   
+Below is a representation of the key objects accepted by the optimzation algorithm (programatically):
+
+
+INPUT===============================
+The Drayage Optimizer requires three inputs, a list of drivers to schedule, a default driver, and a list of jobs to schedule.  The objects are defined by the following properties:
+	Driver:
+		DisplayName - What the driver is identified by in the output (string)
+		StartingLocation - A location object representing the drivers home (string)
+		EarliestStartTime - The earliest time that a driver may start work (timespan)
+		AvailableDrivingHours - The number of hours a driver can driver during one 24 hour window ( integer (hours))
+		AvailableDutyHours - The number of continuous hours that a driver may work before a scheduled break (integer (hours))
+		AvailableDrivingTime - A TimeSpan representing the AvailableDrivingHoursAvailableDutyTime - A TimeSpan representing the AvailableDutyHours (timespan)
+
+	Job:
+		DisplayName - What the job is identified by in the output (string)
+		EquipmentConfiguration - The Chassis, ChassisOwner, Container, and ContainerOwner required to satisfy the job (string), is loaded (boolean)
+		RouteStops - 
+		- List of the locations (latitude and longitude coordinates (doubles)), 
+		- time window (Timespan), 
+		- stop delay (nullable timespan), 
+		- and stop actions (This property is no longer required in this release of the application).
+  
+In this version of the application a functionality was built to consume order data from a .csv or .xls/.xlsx formated file. A sample file is included as part of the documentation in this realease. The name of the file is "FRATIS ORDER IMPORT TEMPLATE". Also included is a file named "FRATIS ORDER IMPORT DATA DICTIONARY" that describes each of the fields in the order import template. 
+    
+
+OUTPUT==============================
+The Drayage Optimizer returns a Solution object, which consists of the following properties:
+	RouteSolutions - A list of Solution objects, with one per driver scheduled
+	UnassignedJobNodes - A list of any jobs that were unable to be assigned 
+	RouteStatistics - A statistics object representing time spend in various activities and distance travelled

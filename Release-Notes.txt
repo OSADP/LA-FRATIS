@@ -1,0 +1,63 @@
+Projects Included In Solution:
+
+CORE
+	PAI.FRATIS.SFL.Common	- Common interfaces used throughout solution
+		Defines common elements that are composed of objects defined in either the System or System.Runtime.Serializaiton namespaces and a common IEntity interface which underpins a common means for identifying similar objects.
+
+	PAI.FRATIS.SFL.Data	- Data Access Tier: Entity Framework implementation
+		Defines three namespaces, PAI.FRATIS.SFL.Data, PAI.FRATIS.SFL.Data.Mappings, and PAI.FRATIS.SFL.Data.Migrations.  PAI.FRATIS.SFL.Data comprises the EntityFramework implementation of the domain objects used by the Drayage 		Route Optimizer, the Mappings namespace defines any unique mappings necessary from the persistence repository objects to the domain objects.  The Migrations namespace is used to create or modify seed data and contains 		method hooks for implementing run once data conversion methods.
+
+	PAI.FRATIS.Domain	- Business / Domain Objects
+		Comprises several subnamespaces: Congifuration, Equipment, Geography, , Logging, Messaging, Orders, Planning, Times, and Users
+		The Configuration namespace contains configuration and preference objects; the Equipment namespace defines typically amortizable physical goods represented in the optimizer; Geography defines objects that represent either 		a physical location and situational effects that are geographically bound, such as traffic. Logging provides facilities for outputting debugging and information messages to the file system or screen; Messaging provides an 		Alert object which can route a message or event from a user to another; Orders defines the objects that are necessary to instantiate an order to process through the optimization algorithm, such as drivers, jobs, jobs 		status updates, and which actions are available to undertake during a stop; Planning segregates those elements uses to set up and generate an optimization plan for a number of drivers with some number of jobs; Times 		supplies an access point for fine tuning actions by the day of the week; and Users defines the objects necessary for user management.  
+
+	PAI.FRATIS.SFL.Infrastructure	- Project Infrastructure, Ninject Inversion of Control (IoC)
+		Infrastructure segregates the Infrastructure; Infrastructure.Data; Infrastructure.Engine; and Infrastructure.Threading objects that are used to implement the Dependency Injection pattern and support multi-threaded 		generation of the optimal route. 
+
+WEB	
+	PAI.FRATIS.SFL.Web.Framework	- Where most of the applications/websites settings is configured. Important Classes, Interfaces, and ViewModels needed by the Web project. Dependency registration, AutoMapper Profiles, and 				some helper classes to help move around in the Web app. 
+		
+	PAI.FRATIS.SFL.Web	- The main Web application that starts up. Every html page is inside of the View folder. Contains every endpoint inside of the controllers folder. This project acts as the main bridge between the 				html and the services/optimization.
+		Contains the ‘client’ folder which contains the MTO Notification Portal and uses angular. To be able to correctly use, you must compile it using npm, bower, and gulp. Afterwards you can access it by placing /mto after the 		address of the application.
+
+SERVICES	
+	PAI.FRATIS.SFL.Services	- Services for Domain Objects, Persistence
+		Provides an access point for application access of persistence repositories during execution of the optimization algorithm.
+	
+ROUTING ENGINE	
+	PAI.Gis.Routing.Engine	- Configures the traffic engine and calculates distances/time with traffic on.
+	LaTrafficGenerator/I35RouteGenerator	- Generates a traffic data file to be used by the Routing.Engine
+
+OPTIMIZATION ALGORITHM
+	PAI.Drayage.Optimization	- Optimization Algorithm
+		The optimization algorithm, wherein jobs and drivers are matched on user provided selection criteria.  Typically this is minimizes either time or distance traveled while servicing as many jobs as possible.
+
+	PAI.FRATIS.SFL.Optimization.Adapter	- Intermediary between domain objects and algorithm		
+		Access point for further configuration and adjustment of the optimization algorithm or supporting object after initialization and during run-time.
+
+	PAI.Drayage.Optimization.Reporting	- Reporting and statistical service for optimization algorithm solutions
+		A collection of objects and methods that will examine generated routes and schedules to extract meaningful data over the generated route solutions.
+	
+TESTS	
+	PAI.FRATIS.SFL.DataServices.Tests	- Integration tests for testing database interaction with the PAI.FRATIS.SFL.Services project.
+	PAI.FRATIS.SFL.Integration.Tests	- Integration tests for data source connections
+	PAI.FRATIS.SFL.Tests	- Unit tests to ensure the correct behavior of the component objects of the project whole.
+
+MOBILE	
+	Presentation	- This folder and the project inside detail how the mobile view will be shown depending on the device. Mainly a generic all view, Android view, iOS view, and a WinPhone view.
+	PAI.RP.Data.Portable	- Configures the repository on the phone to be able to store and retrieve data that has already been collected through rest services or through the actual mobile driver.
+	PAI.RP.Services.Persistence.Portable	- A bridge between data and the repository. Mainly used to compress and decompress for storage.
+	PAI.RP.Services.Rest.Portable	- The main project that sets up the Restful calls to the main application to retrieve information needed for the mobile project. From here it will be saved internally or used in the services.
+	PAI.lRP.Services.Portable	- This is the where all of the business logic goes. Retrieval of the restful data, manipulation, and storage of it. 
+
+TRAFFIC SERVICE
+	FratisTraffic	- Tool that generates a historical delay table for routes that have traffic information.  The tool works by querying the RIITS database for historical traffic data.  It then proceeds to scrub the data and snap it 		to actual roadways via OSRM.  Once all of the data is organized and snapped to the roadways, the delays are then calculated and the data saved to a binary file that can be loaded by the optimization engine.
+		Note:
+		- The tool requires OSRM web API 5.4.2 and the RIITS Oracle DB to operate.
+
+  
+
+==========================================================================================================================
+
+The Drayage Optimizer will produce a solution set that represents the best determined sequence of stops, minimizing the total time for execution based upon Locations, Divers, Jobs, Routes, and Traffic Delays provided to the algorithm. Traffic delays can be provided by any third party external system that estimates travel times considering traffic within two locations.  
+The solution is built leveraging v4.5 of the .NET Framework.  The optimization class library has a small footprint, and should run successfully on any computer capable of supporting .NET v4.5.  

@@ -1,0 +1,19 @@
+Key contributors to the development of the Enhancement of Cross Town Improvement Project (C-TIP) Drayage Optimization Proof of Concept Application, and development of the documentation include:
+
+
+From Productivity Apex, Inc.
+	Mansooreh Mollaghasemi (President and CEO) 
+	Walt Wilson (Vice President of Operations)
+	Fabio Zavagnini (Transportation and Business Analyst)
+	Natalie Fernandez (Project Coordinator) 
+
+
+The developers also wish to acknowledge several contributors to this study:
+
+
+From the U.S. Department of Transportation: 
+Jeff Purdy (FHWA - HOFM)
+Vince Mantero (FHWA, Office of Freight Management and Operations)
+Edward Fok (USDOT/FHWA) 
+
+Addtional thanks to: LA METRO and CALTRANS for allowing access to the Regional Integration of Intelligent Transportation Systems (RIITS) database.
